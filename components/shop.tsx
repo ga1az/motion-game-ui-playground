@@ -14,9 +14,12 @@ export default function Shop() {
     }
   };
 
-  const handlePurchase = (amount: number) => {
+  const handlePurchase = (amount: number, type: string) => {
     if (money >= amount) {
       spendMoney(amount);
+      if (type === 'multiplier') {
+        setMoneyMultiplier((prev) => prev + 0.1);
+      }
       toast.success('Item purchased successfully!', {
         style: {
           background: 'green',
@@ -46,7 +49,7 @@ export default function Shop() {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.8 }}
             className="border-2 border-green-900 w-20 h-20 relative"
-            onClick={() => handlePurchase(10)}
+            onClick={() => handlePurchase(10, 'item')}
           >
             <p className="absolute font-bold top-1 left-1">Item 1 - $10</p>
           </motion.div>
@@ -54,7 +57,7 @@ export default function Shop() {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.8 }}
             className="border-2 border-green-900 w-20 h-20 relative"
-            onClick={() => handlePurchase(20)}
+            onClick={() => handlePurchase(20, 'item')}
           >
             <p className="absolute font-bold top-1 left-1">Item 2 - $20</p>
           </motion.div>
@@ -62,7 +65,7 @@ export default function Shop() {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.8 }}
             className="border-2 border-green-900 w-20 h-20 relative"
-            onClick={() => handlePurchase(30)}
+            onClick={() => handlePurchase(30, 'item')}
           >
             <p className="absolute font-bold top-1 left-1">Item 3 - $30</p>
           </motion.div>
@@ -70,9 +73,17 @@ export default function Shop() {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.8 }}
             className="border-2 border-green-900 w-20 h-20 relative"
-            onClick={() => handlePurchase(40)}
+            onClick={() => handlePurchase(40, 'item')}
           >
             <p className="absolute font-bold top-1 left-1">Item 4 - $40</p>
+          </motion.div>
+          <motion.div
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.8 }}
+            className="border-2 border-green-900 w-20 h-20 relative"
+            onClick={() => handlePurchase(50, 'multiplier')}
+          >
+            <p className="absolute font-bold top-1 left-1">Multiplier +0.1 - $50</p>
           </motion.div>
         </div>
         <DrawerFooter>
