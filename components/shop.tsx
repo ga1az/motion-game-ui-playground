@@ -2,12 +2,36 @@ import { Drawer, DrawerClose, DrawerContent, DrawerFooter, DrawerHeader, DrawerT
 import { Button } from './ui/button';
 import { motion } from 'motion/react';
 import useShop from '@/lib/shop.hook';
+import useMoney from '@/lib/money.hook';
+import { toast } from "sonner"
 
 export default function Shop() {
   const { isOpen, onClose } = useShop();
+  const { money, spendMoney } = useMoney();
   const onChange = (open: boolean) => {
     if (!open) {
       onClose();
+    }
+  };
+
+  const handlePurchase = (amount: number) => {
+    if (money >= amount) {
+      spendMoney(amount);
+      toast.success('Item purchased successfully!', {
+        style: {
+          background: 'green',
+          color: 'white',
+          fontFamily: 'monospace',
+        },
+      });
+    } else {
+      toast.error('Not enough money to purchase this item.', {
+        style: {
+          background: 'red',
+          color: 'white',
+          fontFamily: 'monospace',
+        },
+      });
     }
   };
 
@@ -22,6 +46,7 @@ export default function Shop() {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.8 }}
             className="border-2 border-green-900 w-20 h-20 relative"
+            onClick={() => handlePurchase(10)}
           >
             <p className="absolute font-bold top-1 left-1">Item 1 - $10</p>
           </motion.div>
@@ -29,6 +54,7 @@ export default function Shop() {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.8 }}
             className="border-2 border-green-900 w-20 h-20 relative"
+            onClick={() => handlePurchase(20)}
           >
             <p className="absolute font-bold top-1 left-1">Item 2 - $20</p>
           </motion.div>
@@ -36,6 +62,7 @@ export default function Shop() {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.8 }}
             className="border-2 border-green-900 w-20 h-20 relative"
+            onClick={() => handlePurchase(30)}
           >
             <p className="absolute font-bold top-1 left-1">Item 3 - $30</p>
           </motion.div>
@@ -43,6 +70,7 @@ export default function Shop() {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.8 }}
             className="border-2 border-green-900 w-20 h-20 relative"
+            onClick={() => handlePurchase(40)}
           >
             <p className="absolute font-bold top-1 left-1">Item 4 - $40</p>
           </motion.div>
