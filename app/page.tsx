@@ -1,7 +1,7 @@
 'use client';
 import SkeletonCharacter from '@/components/skeleton';
 import { Button } from '@/components/ui/button';
-import { BackpackIcon } from 'lucide-react';
+import { BackpackIcon, ShoppingCartIcon } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
 import {
@@ -11,6 +11,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import useAddInventory from '@/lib/inventory.hook';
+import useShop from '@/lib/shop.hook';
 import ModalProvider from '@/components/modal.provider';
 import { cn } from '@/lib/utils';
 
@@ -23,6 +24,7 @@ const headingVariants = {
 export default function Home() {
   const [armor, setArmor] = useState(false);
   const handleOpenInventory = useAddInventory();
+  const handleOpenShop = useShop();
   return (
     <div className="flex justify-center items-center h-screen w-screen flex-col">
       <ModalProvider />
@@ -32,7 +34,7 @@ export default function Home() {
           armor ? 'border-blue-500' : 'border-gray-500',
         )}
       >
-        <div className="absolute flex justify-between left-2 top-10">
+        <div className="absolute flex flex-col gap-2 justify-between left-2 top-10">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
@@ -46,6 +48,22 @@ export default function Home() {
               </TooltipTrigger>
               <TooltipContent>
                 <p className="font-mono">Open Inventory</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <motion.div whileHover={{ scale: 1.1 }}>
+                  <ShoppingCartIcon
+                    size={30}
+                    className="text-gray-300 hover:text-white transition-all"
+                    onClick={handleOpenShop.onOpen}
+                  />
+                </motion.div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p className="font-mono">Open Shop</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
