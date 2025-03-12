@@ -14,6 +14,7 @@ import useShop from '@/lib/shop.hook';
 import ModalProvider from '@/components/modal.provider';
 import { cn } from '@/lib/utils';
 import useMoney from '@/lib/money.hook';
+import { toast } from "sonner"
 
 const headingVariants = {
   hidden: { opacity: 0, scale: 0.95 },
@@ -23,17 +24,17 @@ const headingVariants = {
 
 export default function Home() {
   const [armor, setArmor] = useState(false);
+  const [moneyMultiplier, setMoneyMultiplier] = useState(1);
   const handleOpenInventory = useAddInventory();
   const handleOpenShop = useShop();
-  import { toast } from "sonner"
   const { money, addMoney, spendMoney } = useMoney();
 
   const handleClick = () => {
     const randomChance = Math.random();
     if (randomChance < 0.5) {
-      addMoney(1);
+      addMoney(1 * moneyMultiplier);
     } else {
-      addMoney(5);
+      addMoney(5 * moneyMultiplier);
     }
   };
 
@@ -42,9 +43,11 @@ export default function Home() {
       spendMoney(2000);
       setArmor(!armor);
     } else {
-      toast('Not enough money for evolution!',style: {
+      toast('Not enough money for evolution!',{
+        style: {
           fontFamily: 'monospace',
-        },);
+        },
+      });
     }
   };
 
@@ -133,7 +136,7 @@ export default function Home() {
           <p className="font-mono text-white">Money: ${money}</p>
         </div>
         <div className="mt-4">
-          <motion.div whileTap={{ scale: 0.9 }}>
+          <motion.div whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.1 }} transition={{ duration: 0.3 }}>
             <button
               className="border-4 border-black bg-gray-300 text-black font-bold py-2 px-4 w-full cursor-pointer font-mono select-none"
               onClick={handleClick}
